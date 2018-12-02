@@ -1,15 +1,15 @@
 <ion-view title="Home" id="page2">
   <ion-content padding="true" class="has-header">
-    <div class="list card" ng-repeat = "feed in feeds" id="home-card23">
+    <div class="list card" ng-repeat="feed in feeds" id="home-card23">
      
-        <img ng-src="{{feed.image}}" style = "width:100%">
+        <img ng-src="{{feed.imageurl}}" style = "width:100%">
  
-      <h1 id="home-heading2" style="color:#000000;">{{feed.name}}</h1>
+      <h1 id="home-heading2" style="color:#000000;">{{feed.eventname}}</h1>
       <div id="home-markdown8" class="show-list-numbers-and-dots">
-        <p style="color:#000000;">Venue: </p>
+        <p style="color:#000000;">Venue: {{feed.venue}}</p>
       </div>
       <div id="home-markdown9" class="show-list-numbers-and-dots">
-        <p style="color:#000000;">Date: </p>
+        <p style="color:#000000;">Date: {{feed.eventdate}}</p>
       </div>
     </div>
   </ion-content>

@@ -1,3 +1,30 @@
-<ion-view title="Login/out" id="page5">
-  <ion-content padding="true" class="has-header"></ion-content>
+
+<ion-view title="Login" id="page6">
+  <ion-content padding="true" class="has-header">
+    <form id="login-form3" class="list">
+      <ion-list id="login-list2">
+        <label class="item item-input" id="login-input3">
+          <span class="input-label">{{session.username}}</span>
+          <input type="text" placeholder="" ng-model="data.username">
+        </label>
+        <label class="item item-input" id="login-input4">
+          <span class="input-label">Password</span>
+          <input type="password" placeholder="" ng-model="data.password">
+        </label>
+      </ion-list>
+      <div class="spacer" style="height: 40px;"></div>
+      <button id="login-button22" class="button button-stable button-block" ng-click="login()">Log in</button>
+    </form>
+
+    <ion-list id="profile-list7">
+      <ion-item class="item-avatar" id="profile-list-item46">
+        <h2>Item</h2>
+      </ion-item>
+    </ion-list>
+    <ion-list id="profile-list8">
+      <ion-item id="profile-list-item43">Logoff/ Login</ion-item>
+      <ion-item id="profile-list-item44">Registered Events</ion-item>
+    </ion-list>
+
+  </ion-content>
 </ion-view>

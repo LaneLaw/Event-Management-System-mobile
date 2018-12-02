@@ -38,7 +38,6 @@ angular.module('app.routes', ['ionicUIRouter'])
       }
     }
   })
-
   .state('tabsController.loginOut', {
     url: '/page5',
     views: {
@@ -133,3 +132,4 @@ $urlRouterProvider.otherwise('/page1/page2')
 
 
 });
+
