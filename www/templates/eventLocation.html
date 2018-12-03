@@ -1,7 +1,7 @@
 <ion-view title="Event Location" id="page4">
   <ion-content padding="true" class="has-header">
     <ion-list id="eventLocation-list4">
-      <ion-item id="eventLocation-list-item32" ui-sref="tabsController.event2()" ng-repeat = 'event in events'>{{event.VenueName}}</ion-item>
+      <ion-item id="eventLocation-list-item32" ng-repeat = 'event in events' ui-sref="tabsController.event2( { VenueID : event.VenueID } )" >{{event.VenueName}}</ion-item>
     </ion-list>
   </ion-content>
 </ion-view>

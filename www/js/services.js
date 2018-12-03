@@ -25,10 +25,15 @@ angular.module('app.services', [])
     ];
       this.getAllVenues = function(){
           return Venues;
-      }
+      };
       this.getVenueByID = function(id){
         return Venues[id - 1];
-    }
+    };
+    this.getVenueByVID = function(vid){
+        return Venues.filter(function (venue){
+            return venue.VenueID === vid;
+        });
+    };
 
     var events = [
         {

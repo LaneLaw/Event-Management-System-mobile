@@ -5,21 +5,23 @@ angular.module('app.controllers', [])
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
         function ($scope, $stateParams, $http,Event) {
     
-            $http.get("http://localhost:1337/event/index")
+            $http.get("http://localhost:1337/event/highlight")
             .then(function(response){
               $scope.feeds = response.data;
-              console.log($scope.feeds)
+           console.log(response.data);
           });
-        // $scope.events = Event.getAllEvents();
-        // console.log($scope.events);
-        
+  
         }])
 
-    .controller('departmentCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('departmentCtrl', ['$scope', '$stateParams','$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams) {
-
+        function ($scope, $stateParams, $http) {
+            $http.get("http://localhost:1337/event/mdepartment")
+            .then(function(response){
+              $scope.feeds = response.data;
+           console.log(response.data);
+          });
 
         }])
 
@@ -100,10 +102,25 @@ angular.module('app.controllers', [])
 
         }])
 
-    .controller('event2Ctrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('event2Ctrl', ['$scope', '$stateParams','$http','Event' ,// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams) {
+        function ($scope, $stateParams,$http, Event) {
+    $http.get("http://localhost:1337/event/index")
+            .then(function(response){
+              $scope.feeds = response.data;
+              
+            //   for(var j = 0; j < $scope.feeds.length; j++){
+              for(var i = 0; i < $scope.feeds.length; i++){
+                  if($scope.feeds[i].venue === $stateParams.VenueID){
+                    $scope.events0 = $scope.feeds[i];
+                  }
 
-
+              }
+        
+                  console.log($scope.events0);
+            // }
+              
+            });
+        
         }])
