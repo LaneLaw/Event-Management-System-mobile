@@ -106,49 +106,43 @@ angular.module('app.controllers', [])
                 });
         }])
 
-    .controller('locationCtrl', ['$scope', '$stateParams', '$ionicTabsDelegate','Event', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('locationCtrl', ['$scope', '$stateParams', '$ionicTabsDelegate', 'Event', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams, $ionicTabsDelegate,Event) {
-            
+        function ($scope, $stateParams, $ionicTabsDelegate, Event) {
+
             $scope.events = Event.getAllVenues();
-            for(var i = 0; i < $scope.events.length; i ++){
-                if($scope.events[i].VenueID === $stateParams.VenueID){
+            for (var i = 0; i < $scope.events.length; i++) {
+                if ($scope.events[i].VenueID === $stateParams.VenueID) {
                     $scope.Latitude = $scope.events[i].Latitude;
                     $scope.Longitude = $scope.events[i].Longitude;
                     $scope.venuename = $scope.events[i].VenueName;
                 }
             }
-            console.log($scope.Longitude);
-            var map = L.map('map').setView([$scope.Longitude, $scope.Longitude], 17);
+
+
+            var map = L.map(document.querySelector('[name="tab' + ($ionicTabsDelegate.selectedIndex() + 1) + '"] #map')).setView([$scope.Latitude, $scope.Longitude], 17);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
-
-            L.marker([$scope.Longitude, $scope.Longitude]).addTo(map)
+            L.marker([$scope.Latitude, $scope.Longitude]).addTo(map)
                 .bindPopup($scope.venuename);
-
         }])
 
     .controller('event2Ctrl', ['$scope', '$stateParams', '$http', 'Event',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
         function ($scope, $stateParams, $http, Event) {
-            $http.get("http://localhost:1337/event/index")
-                .then(function (response) {
-                    $scope.feeds = response.data;
-
-                    //   for(var j = 0; j < $scope.feeds.length; j++){
-                    for (var i = 0; i < $scope.feeds.length; i++) {
-                        if ($scope.feeds[i].venue === $stateParams.VenueID) {
-                            $scope.events0 = $scope.feeds[i];
-                        }
-
-                    }
-
-                    console.log($scope.events0);
-                    // }
-
-                });
+            if ($stateParams.VenueID == "SWT501") {
+                $http.get("http://localhost:1337/event/fvenue")
+                    .then(function (response) {
+                        $scope.feeds = response.data;
+                    });
+            } else {
+                $http.get("http://localhost:1337/event/svenue")
+                    .then(function (response) {
+                        $scope.feeds = response.data;
+                    });
+            }
 
         }])
