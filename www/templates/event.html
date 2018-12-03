@@ -1,7 +1,7 @@
 <ion-view title="Event" id="page6">
   <ion-content padding="true" class="has-header">
     <ion-list id="event-list3">
-      <ion-item id="event-list-item20" ng-repeat = "feed in feeds" ui-sref="tabsController.eventDetail()">{{feed.eventname}}</ion-item>
+      <ion-item id="event-list-item20" ng-repeat = "feed in feeds" ui-sref="tabsController.eventDetail({id : feed.id})">{{feed.eventname}}</ion-item>
     </ion-list>
   </ion-content>
 </ion-view>

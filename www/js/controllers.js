@@ -8,7 +8,6 @@ angular.module('app.controllers', [])
             $http.get("http://localhost:1337/event/highlight")
                 .then(function (response) {
                     $scope.feeds = response.data;
-                    console.log(response.data);
                 });
 
         }])
@@ -95,18 +94,39 @@ angular.module('app.controllers', [])
     .controller('eventDetailCtrl', ['$scope', '$stateParams', '$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams,$http) {
+        function ($scope, $stateParams, $http) {
             $http.get("http://localhost:1337/event/index")
-            .then(function (response) {
-                $scope.feeds = response.data;
-            });
+                .then(function (response) {
+                    $scope.feeds = response.data;
+                    for (var i = 0; i < $scope.feeds.length; i++) {
+                        if ($scope.feeds[i].id == $stateParams.id) {
+                            $scope.event = $scope.feeds[i];
+                        }
+                    }
+                });
         }])
 
-    .controller('locationCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('locationCtrl', ['$scope', '$stateParams', '$ionicTabsDelegate','Event', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams) {
+        function ($scope, $stateParams, $ionicTabsDelegate,Event) {
+            
+            $scope.events = Event.getAllVenues();
+            for(var i = 0; i < $scope.events.length; i ++){
+                if($scope.events[i].VenueID === $stateParams.VenueID){
+                    $scope.Latitude = $scope.events[i].Latitude;
+                    $scope.Longitude = $scope.events[i].Longitude;
+                    $scope.venuename = $scope.events[i].VenueName;
+                }
+            }
+            console.log($scope.Longitude);
+            var map = L.map('map').setView([$scope.Longitude, $scope.Longitude], 17);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
 
+            L.marker([$scope.Longitude, $scope.Longitude]).addTo(map)
+                .bindPopup($scope.venuename);
 
         }])
 

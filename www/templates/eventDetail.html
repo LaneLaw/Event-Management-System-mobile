@@ -1,18 +1,21 @@
 <ion-view title="Event Detail" id="page7">
   <ion-content padding="true" class="has-header">
     <div class="list card" id="eventDetail-card25">
-      <div style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;">
-        <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
-      </div>
-      <h1 id="eventDetail-heading3" style="color:#000000;">{{}}</h1>
+
+        <img ng-src="{{event.imageurl}}" style = "width:100%">
+     
+      <h1 id="eventDetail-heading3" style="color:#000000;">{{event.eventname}}</h1>
       <div id="eventDetail-markdown13" class="show-list-numbers-and-dots">
-        <p style="color:#000000;">All details here.. </p>
+        <p style="color:#000000;">{{event.fulldescription}}</p>
       </div>
       <div id="eventDetail-button-bar2" class="button-bar">
+        <a ui-sref="tabsController.location( { VenueID : event.venue } )" id="eventDetail-button13" class="button button-positive button-block">Address</a>
         <button id="eventDetail-button12" class="button button-positive button-block button-outline">Register</button>
-        <a ui-sref="tabsController.location()" id="eventDetail-button13" class="button button-positive button-block">Address</a>
       </div>
       <div id="eventDetail-button-bar1" class="button-bar"></div>
     </div>
   </ion-content>
 </ion-view>
+
+
+

@@ -1,9 +1,9 @@
-<ion-view title="Home" id="page2">
+<!-- <ion-view title="Home" id="page2">
   <ion-content padding="true" class="has-header">
-    <div class="list card" ng-repeat="feed in feeds" id="home-card23">
-     
-        <img ng-src="{{feed.imageurl}}" style = "width:100%">
- 
+    <a class="list card" ng-repeat="feed in feeds" id="home-card23" ui-sref="tabsController.eventDetail({id : feed.id})">
+
+      <img ng-src="{{feed.imageurl}}" style="width:100%">
+
       <h1 id="home-heading2" style="color:#000000;">{{feed.eventname}}</h1>
       <div id="home-markdown8" class="show-list-numbers-and-dots">
         <p style="color:#000000;">Venue: {{feed.venue}}</p>
@@ -11,6 +11,21 @@
       <div id="home-markdown9" class="show-list-numbers-and-dots">
         <p style="color:#000000;">Date: {{feed.eventdate}}</p>
       </div>
-    </div>
+    </a>
   </ion-content>
-</ion-view>
+</ion-view> -->
+
+<ion-view title="Home" id="page2">
+    <ion-content padding="true" class="has-header">
+      <a class="list card" style="display:block;text-decoration:none;" ng-repeat="feed in feeds" ui-sref="tabsController.eventDetail({id : feed.id})" id="home-card23">
+          <img ng-src="{{feed.imageurl}}" style="width:100%">
+        <h1 id="home-heading2" style="color:#000000;">{{feed.eventname}}</h1>
+        <div id="home-markdown8" class="show-list-numbers-and-dots">
+          <p style="color:#000000;">Venue: {{feed.venue}} </p>
+        </div>
+        <div id="home-markdown9" class="show-list-numbers-and-dots">
+          <p style="color:#000000;">Date: {{feed.eventdate}}</p>
+        </div>
+      </a>
+    </ion-content>
+  </ion-view>
