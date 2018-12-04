@@ -151,11 +151,13 @@ angular.module('app.controllers', [])
 
                             confirmPopup.then(function (res) {
                                 if (res) {
-                                    alert("re")
+                                    var alertPopup = $ionicPopup.alert({
+                                        title: "",
+                                        template: 'Registered successfully.'});
                                     // $window.location.href = '/';
                                     $state.go("tabsController.home");
                                 } else {
-                                    console.log('granted');
+                                    $http.get("http://localhost:1337/user/"+ $scope.userid+"/register/remove/" + $stateParams.id)
                                     $state.go($state.current, {}, { reload: true });
                                 }
                             });
