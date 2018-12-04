@@ -2,12 +2,12 @@
   <ion-content padding="true" class="has-header">
     <ion-list id="profile-list7">
       <ion-item class="item-avatar" id="profile-list-item46">
-        <h2>Item</h2>
+        <h2>{{username}}</h2>
       </ion-item>
     </ion-list>
     <ion-list id="profile-list8">
-      <ion-item id="profile-list-item43">Logoff/ Login</ion-item>
-      <ion-item id="profile-list-item44">Registered Events</ion-item>
+      <ion-item id="profile-list-item43" ui-sref="tabsController.loginOut()">Logoff/ Login</ion-item>
+      <ion-item id="profile-list-item44" ui-sref="tabsController.registration()">Registered Events</ion-item>
     </ion-list>
   </ion-content>
 </ion-view>

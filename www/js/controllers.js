@@ -27,23 +27,24 @@ angular.module('app.controllers', [])
 
         }])
 
-    .controller('loginOutCtrl', ['$scope', '$stateParams', '$http', '$ionicHistory', '$ionicPopup', '$state', '$window',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('loginOutCtrl', ['$scope', '$stateParams', '$http', '$ionicHistory', '$ionicPopup', '$state', '$window', 'Event',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams, $http, $ionicHistory, $ionicPopup, $state, $window) {
+        function ($scope, $stateParams, $http, $ionicHistory, $ionicPopup, $state, $window, Event) {
 
             $scope.data = {};
 
 
             $scope.login = function () {
-                $scope.session = {};
-                console.log($scope.session.username);
                 $http.post("http://localhost:1337/user/login", $scope.data)
                     .then(function (response) {
-                        console.log(response.data);
-                        $scope.session = response.data;
-                        console.log($scope.session.username);
 
+                        $scope.session = response.data;
+                        console.log($scope.session);
+                        Event.setUser($scope.session.username);
+                        Event.setUserID($scope.session.user_id);
+                        // $scope.k.username = Event.getUser();
+                        // console.log($scope.k.username);
                         // A confirm dialog
                         var confirmPopup = $ionicPopup.confirm({
                             title: 'Welcome back!',
@@ -53,7 +54,8 @@ angular.module('app.controllers', [])
                         confirmPopup.then(function (res) {
                             if (res) {
 
-                                $window.location.href = '/';
+                                // $window.location.href = '/';
+                                $state.go("tabsController.home");
                             } else {
                                 console.log('granted');
                                 $state.go($state.current, {}, { reload: true });
@@ -71,6 +73,32 @@ angular.module('app.controllers', [])
 
         }])
 
+
+    .controller('profileCtrl', ['$scope', '$stateParams', 'Event', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+        // You can include any angular dependencies as parameters for this function
+        // TIP: Access Route Parameters for your page via $stateParams.parameterName
+        function ($scope, $stateParams, Event) {
+            $scope.$on("$ionicView.beforeEnter", function () {
+
+                $scope.username = Event.getUser();
+               
+            });
+        }])
+
+    .controller('registrationCtrl', ['$scope', '$stateParams', 'Event','$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+        // You can include any angular dependencies as parameters for this function
+        // TIP: Access Route Parameters for your page via $stateParams.parameterName
+        function ($scope, $stateParams, Event, $http) {
+            $scope.$on("$ionicView.beforeEnter", function () {
+                $scope.userid = Event.getUserID();
+                console.log($scope.userid);
+                $http.get("http://localhost:1337/user/"+ $scope.userid +"/register")
+                .then(function (response) {
+                    $scope.feeds = response.data;
+                    console.log(response.data);
+                });
+            });
+        }])
 
     .controller('eventCtrl', ['$scope', '$stateParams', '$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
@@ -103,6 +131,7 @@ angular.module('app.controllers', [])
                             $scope.event = $scope.feeds[i];
                         }
                     }
+
                 });
         }])
 
