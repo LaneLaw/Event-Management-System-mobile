@@ -10,7 +10,7 @@
       </div>
       <div id="eventDetail-button-bar2" class="button-bar">
         <a ui-sref="tabsController.location( { VenueID : event.venue } )" id="eventDetail-button13" class="button button-positive button-block">Address</a>
-        <button id="eventDetail-button12" class="button button-positive button-block button-outline">Register</button>
+        <button id="eventDetail-button12" class="button button-positive button-block button-outline" ng-click="register({id : event.id})">Register</button>
       </div>
       <div id="eventDetail-button-bar1" class="button-bar"></div>
     </div>

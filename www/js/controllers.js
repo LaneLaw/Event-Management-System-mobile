@@ -81,22 +81,22 @@ angular.module('app.controllers', [])
             $scope.$on("$ionicView.beforeEnter", function () {
 
                 $scope.username = Event.getUser();
-               
+
             });
         }])
 
-    .controller('registrationCtrl', ['$scope', '$stateParams', 'Event','$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('registrationCtrl', ['$scope', '$stateParams', 'Event', '$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
         function ($scope, $stateParams, Event, $http) {
             $scope.$on("$ionicView.beforeEnter", function () {
                 $scope.userid = Event.getUserID();
-                console.log($scope.userid);
-                $http.get("http://localhost:1337/user/"+ $scope.userid +"/register")
-                .then(function (response) {
-                    $scope.feeds = response.data;
-                    console.log(response.data);
-                });
+                
+                $http.get("http://localhost:1337/user/" + $scope.userid + "/register")
+                    .then(function (response) {
+                        $scope.feeds = response.data;
+                        console.log(response.data);
+                    });
             });
         }])
 
@@ -119,20 +119,56 @@ angular.module('app.controllers', [])
 
         }])
 
-    .controller('eventDetailCtrl', ['$scope', '$stateParams', '$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('eventDetailCtrl', ['$scope', '$stateParams', '$http','Event','$ionicPopup','$state',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams, $http) {
-            $http.get("http://localhost:1337/event/index")
-                .then(function (response) {
-                    $scope.feeds = response.data;
-                    for (var i = 0; i < $scope.feeds.length; i++) {
-                        if ($scope.feeds[i].id == $stateParams.id) {
-                            $scope.event = $scope.feeds[i];
+        function ($scope, $stateParams, $http,Event,$ionicPopup,$state) {
+            $scope.$on("$ionicView.beforeEnter", function () {
+                $http.get("http://localhost:1337/event/getEvents")
+                    .then(function (response) {
+                        $scope.feeds = response.data;
+                        for (var i = 0; i < $scope.feeds.length; i++) {
+                            if ($scope.feeds[i].id == $stateParams.id) {
+                                $scope.event = $scope.feeds[i];
+                            }
                         }
-                    }
 
-                });
+                    });
+
+                $scope.register = function () {
+                    $scope.userid = Event.getUserID();
+                    $http.get("http://localhost:1337/user/"+ $scope.userid+"/register/add/" + $stateParams.id)
+                        .then(function (response) {
+
+
+                            // $scope.k.username = Event.getUser();
+                            // console.log($scope.k.username);
+                            // A confirm dialog
+                            var confirmPopup = $ionicPopup.confirm({
+                                title: 'Register this event?',
+                                template: 'Are you sure?'
+                            });
+
+                            confirmPopup.then(function (res) {
+                                if (res) {
+                                    alert("re")
+                                    // $window.location.href = '/';
+                                    $state.go("tabsController.home");
+                                } else {
+                                    console.log('granted');
+                                    $state.go($state.current, {}, { reload: true });
+                                }
+                            });
+
+                        }, function (response) {
+
+                            var alertPopup = $ionicPopup.alert({
+                                title: response.data,
+                                template: 'Not enough quota'
+                            });
+                        });
+                };
+            });
         }])
 
     .controller('locationCtrl', ['$scope', '$stateParams', '$ionicTabsDelegate', 'Event', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
